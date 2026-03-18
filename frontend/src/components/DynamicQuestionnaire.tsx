@@ -70,8 +70,8 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     ) as string;
 
     return (
-      <div 
-        key={question.questionId} 
+      <div
+        key={question.questionId}
         className={`question-container ${hasError ? "question-container__has-error" : ""}`}
       >
         <label className="question-label">
@@ -122,8 +122,8 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     ) as string;
 
     return (
-      <div 
-        key={question.questionId} 
+      <div
+        key={question.questionId}
         className={`question-container ${hasError ? "question-container__has-error" : ""}`}
       >
         <label htmlFor={question.questionId} className="question-label">
@@ -177,8 +177,8 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     };
 
     return (
-      <div 
-        key={question.questionId} 
+      <div
+        key={question.questionId}
         className={`question-container ${hasError ? "question-container__has-error" : ""}`}
       >
         <label className="question-label">
@@ -233,8 +233,8 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     };
 
     return (
-      <div 
-        key={question.questionId} 
+      <div
+        key={question.questionId}
         className={`question-container ${hasError ? "question-container__has-error" : ""}`}
       >
         <label className="question-label">
