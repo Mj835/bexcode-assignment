@@ -1,0 +1,44 @@
+{
+  "userDetails": {
+    "fullName": "Sarah Johnson",
+    "email": "sarah.johnson@example.com",
+    "phone": "+1-555-123-4567",
+    "dateOfBirth": "1990-08-22"
+  },
+  "responses": [
+    {
+      "questionId": "q1",
+      "questionType": "radio",
+      "answer": "Yes"
+    },
+    {
+      "questionId": "q2",
+      "questionType": "multi-select",
+      "answer": "Diabetes, Hypertension, Obesity"
+    },
+    {
+      "questionId": "q3",
+      "questionType": "select",
+      "answer": "Vegetarian"
+    },
+    {
+      "questionId": "q4",
+      "questionType": "compound",
+      "answer": "5 feet 6 inches"
+    },
+    {
+      "questionId": "q5",
+      "questionType": "radio",
+      "answer": "Pregnant"
+    },
+    {
+      "questionId": "q6",
+      "questionType": "select",
+      "answer": "Second Trimester"
+    }
+  ],
+  "metadata": {
+    "timezone": "America/New_York",
+    "submittedAt": "2024-03-17T14:30:00.000Z"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "questions": [
+    {
+      "questionId": "q1",
+      "questionType": "radio",
+      "question": "Do you have a family history of diabetes?",
+      "description": "Please select one option",
+      "required": true,
+      "options": [
+        { "value": "Yes", "label": "Yes" },
+        { "value": "No", "label": "No" }
+      ]
+    },
+    {
+      "questionId": "q2",
+      "questionType": "multi-select",
+      "question": "Which of the following medical conditions do you have? (Select all that apply)",
+      "description": "Check all that apply",
+      "required": true,
+      "options": [
+        { "value": "Diabetes", "label": "Diabetes" },
+        { "value": "Hypertension", "label": "Hypertension" },
+        { "value": "Heart Disease", "label": "Heart Disease" },
+        { "value": "Asthma", "label": "Asthma" },
+        { "value": "None", "label": "None of the above" }
+      ]
+    },
+    {
+      "questionId": "q3",
+      "questionType": "select",
+      "question": "What is your dietary preference?",
+      "description": "Choose from the dropdown",
+      "required": true,
+      "options": [
+        { "value": "Vegetarian", "label": "Vegetarian" },
+        { "value": "Vegan", "label": "Vegan" },
+        { "value": "Non-Vegetarian", "label": "Non-Vegetarian" },
+        { "value": "Prefer not to say", "label": "Prefer not to say" }
+      ]
+    },
+    {
+      "questionId": "q4",
+      "questionType": "compound",
+      "question": "What is your height?",
+      "description": "Please provide your height in feet and inches",
+      "required": true,
+      "compoundFields": [
+        {
+          "name": "feet",
+          "label": "Feet",
+          "type": "number",
+          "placeholder": "e.g., 5"
+        },
+        {
+          "name": "inches",
+          "label": "Inches",
+          "type": "number",
+          "placeholder": "e.g., 6"
+        }
+      ]
+    },
+    {
+      "questionId": "q5",
+      "questionType": "radio",
+      "question": "How often do you exercise?",
+      "description": "Select your exercise frequency",
+      "required": true,
+      "options": [
+        { "value": "Rarely", "label": "Rarely" },
+        { "value": "1-2 times per week", "label": "1-2 times per week" },
+        { "value": "3-4 times per week", "label": "3-4 times per week" },
+        { "value": "Daily", "label": "Daily" }
+      ]
+    },
+    {
+      "questionId": "q6",
+      "questionType": "radio",
+      "question": "Are you currently pregnant?",
+      "description": "This information helps us provide personalized recommendations",
+      "required": false,
+      "options": [
+        { "value": "Yes", "label": "Yes" },
+        { "value": "No", "label": "No" },
+        { "value": "Not Applicable", "label": "Not Applicable" }
+      ]
+    },
+    {
+      "questionId": "q7",
+      "questionType": "select",
+      "question": "Which trimester are you in?",
+      "description": "Please select your current trimester",
+      "required": true,
+      "dependsOn": {
+        "questionId": "q6",
+        "value": "Yes",
+        "operator": "equals"
+      },
+      "options": [
+        {
+          "value": "First Trimester (0-3 months)",
+          "label": "First Trimester (0-3 months)"
+        },
+        {
+          "value": "Second Trimester (4-6 months)",
+          "label": "Second Trimester (4-6 months)"
+        },
+        {
+          "value": "Third Trimester (7-9 months)",
+          "label": "Third Trimester (7-9 months)"
+        }
+      ]
+    },
+    {
+      "questionId": "q8",
+      "questionType": "multi-select",
+      "question": "What pregnancy-related symptoms are you experiencing?",
+      "description": "Select all that apply (optional)",
+      "required": false,
+      "dependsOn": {
+        "questionId": "q6",
+        "value": "Yes",
+        "operator": "equals"
+      },
+      "options": [
+        { "value": "Morning sickness", "label": "Morning sickness" },
+        { "value": "Back pain", "label": "Back pain" },
+        { "value": "Fatigue", "label": "Fatigue" },
+        { "value": "Swelling", "label": "Swelling" },
+        { "value": "Heartburn", "label": "Heartburn" }
+      ]
+    }
+  ]
+}
