@@ -240,12 +240,21 @@
   content: "⚠";
   font-size: 0.9rem;
 }
-  25% {
-    transform: translateX(-5px);
-  }
-  75% {
-    transform: translateX(5px);
-  }
+
+.required {
+  color: #dc3545;
+  margin-left: 0.25rem;
+}
+
+.conditional-indicator {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
 }
 
 /* Conditional Question Styling */
