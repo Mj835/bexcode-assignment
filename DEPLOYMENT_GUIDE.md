@@ -5,7 +5,8 @@ A full-stack application for collecting health consultation data with a React fr
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - MongoDB (local or MongoDB Atlas)
 - Git
 - Vercel CLI (for deployment)
@@ -13,6 +14,7 @@ A full-stack application for collecting health consultation data with a React fr
 ### Local Development
 
 1. **Clone and Install**
+
 ```bash
 git clone https://github.com/yourusername/bexcode-health-consultation.git
 cd bexcode-health-consultation
@@ -22,7 +24,8 @@ npm install
 ```
 
 2. **Configure Environment**
-Create `.env.local` in the root directory (copy from `.env.example`):
+   Create `.env.local` in the root directory (copy from `.env.example`):
+
 ```bash
 # Backend
 MONGODB_URI=mongodb://localhost:27017/consultations
@@ -34,6 +37,7 @@ VITE_API_URL=http://localhost:5000/api
 ```
 
 3. **Run Development Servers**
+
 ```bash
 # Terminal 1: Backend
 cd backend && npm run dev
@@ -78,9 +82,11 @@ bexcode-health-consultation/
 ## 🌐 API Endpoints
 
 ### Health Check
+
 - `GET /api/health` - Check if API is running
 
 ### Consultations
+
 - `POST /api/consultations` - Submit a new consultation
 - `GET /api/consultations` - Get all consultations (admin)
 - `GET /api/consultations/:id` - Get specific consultation
@@ -89,6 +95,7 @@ bexcode-health-consultation/
 ## 🚀 Deployment on Vercel
 
 ### Why Vercel?
+
 - **Best for this stack**: Excellent support for Node.js, React, and TypeScript
 - **Monorepo support**: Easy to manage frontend and backend in one repo
 - **Environment variables**: Secure, easy-to-manage secret management
@@ -99,6 +106,7 @@ bexcode-health-consultation/
 ### Deployment Steps
 
 #### 1. Push to GitHub
+
 ```bash
 git remote add origin https://github.com/yourusername/bexcode-health-consultation.git
 git branch -M main
@@ -110,6 +118,7 @@ git push -u origin main
 **Option A: Two Separate Projects (Recommended)**
 
 **Frontend Deploy:**
+
 1. Go to https://vercel.com/new
 2. Select your GitHub repository
 3. Set Root Directory: `frontend`
@@ -118,6 +127,7 @@ git push -u origin main
 5. Deploy
 
 **Backend Deploy:**
+
 1. Go to https://vercel.com/new
 2. Select your GitHub repository
 3. Set Root Directory: `backend`
@@ -126,6 +136,7 @@ git push -u origin main
    - `CORS_ORIGIN`: Your frontend URL (e.g., https://bexcode.vercel.app)
    - `NODE_ENV`: `production`
 5. Add a `vercel.json` in the backend folder:
+
 ```json
 {
   "version": 2,
@@ -143,6 +154,7 @@ git push -u origin main
   ]
 }
 ```
+
 6. Deploy
 
 **Option B: Monorepo with rewrites (Single Vercel Project)**
@@ -151,11 +163,13 @@ Use the provided `vercel.json` configuration.
 ### 3. Configure Environment Variables
 
 **Frontend (.env):**
+
 ```
 VITE_API_URL=https://bexcode-api.vercel.app/api
 ```
 
 **Backend (.env):**
+
 ```
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/consultations
 PORT=3000
@@ -166,6 +180,7 @@ NODE_ENV=production
 ### 4. GitHub Secrets Setup (Optional - for CI/CD)
 
 If implementing GitHub Actions, add these secrets:
+
 - `VERCEL_TOKEN`: Get from https://vercel.com/account/tokens
 - `VERCEL_ORG_ID`: From Vercel project settings
 - `VERCEL_PROJECT_ID_FRONTEND`: Frontend project ID
@@ -174,12 +189,14 @@ If implementing GitHub Actions, add these secrets:
 ## 🗄️ MongoDB Setup
 
 ### Using MongoDB Atlas (Cloud):
+
 1. Create a free cluster at https://www.mongodb.com/cloud/atlas
 2. Create a database user
 3. Get connection string: `mongodb+srv://user:password@cluster.mongodb.net/consultations`
 4. Add to Vercel environment variables
 
 ### Using Local MongoDB:
+
 1. Install MongoDB Community Edition
 2. Start MongoDB service
 3. Use: `mongodb://localhost:27017/consultations`
@@ -187,15 +204,18 @@ If implementing GitHub Actions, add these secrets:
 ## 🔒 Environment Variables Management
 
 ### Local Development
+
 - Create `.env.local` file (git-ignored)
 - Load variables from `.env.local` in development
 
 ### Production (Vercel)
+
 - Set environment variables in Vercel dashboard
 - No secrets in git repository
 - Use Environment Variable Groups for easier management
 
 ### Environment Variable Reference
+
 See `.env.example` for all available variables.
 
 ## 🧪 Testing the Deployment
@@ -233,15 +253,18 @@ curl -X POST https://bexcode-api.vercel.app/api/consultations \
 ## 🛠️ Troubleshooting
 
 ### CORS Errors
+
 - Ensure `CORS_ORIGIN` environment variable matches your frontend URL
 - Check backend logs in Vercel dashboard
 
 ### API Connection Issues
+
 - Verify `VITE_API_URL` is correct in frontend
 - Check MongoDB connection string
 - Review Vercel function logs
 
 ### Build Failures
+
 - Check `vercel.json` configuration
 - Ensure all dependencies are in `package.json`
 - Verify Node version compatibility
@@ -256,7 +279,7 @@ curl -X POST https://bexcode-api.vercel.app/api/consultations \
 ✅ **Responsive Design** - Works on mobile and desktop  
 ✅ **Error Handling** - Comprehensive error messages  
 ✅ **Database Persistence** - MongoDB integration  
-✅ **RESTful API** - Clean, documented endpoints  
+✅ **RESTful API** - Clean, documented endpoints
 
 ## 🚀 Performance
 

@@ -33,6 +33,7 @@ git status
 ## Step 2️⃣: Create GitHub Repository
 
 ### Option A: Using GitHub Web UI (Recommended)
+
 1. Go to https://github.com/new
 2. Repository name: `bexcode-health-consultation`
 3. Description: `Full-stack health consultation intake system`
@@ -40,6 +41,7 @@ git status
 5. Click **Create repository**
 
 ### Option B: Using GitHub CLI
+
 ```bash
 # Install GitHub CLI: https://cli.github.com
 gh auth login
@@ -62,6 +64,7 @@ git push -u origin main
 ```
 
 ### Verify Connection
+
 ```bash
 git remote -v
 # Should show:
@@ -143,17 +146,20 @@ vercel --prod
 ## Step 6️⃣: Configure MongoDB Atlas (Database)
 
 ### 1. Create MongoDB Atlas Account
+
 - Go to https://www.mongodb.com/cloud/atlas
 - Click **Sign Up**
 - Create free account
 
 ### 2. Create Cluster
+
 - Click **+ Create** → **Database**
 - Choose **M0 (Free Forever)** tier
 - Select your region (closest to you)
 - Click **Create**
 
 ### 3. Create Database User
+
 - Go to **Database Access**
 - Click **+ Add Database User**
 - Choose **Password** authentication
@@ -162,18 +168,21 @@ vercel --prod
 - Click **Add User**
 
 ### 4. Whitelist IP
+
 - Go to **Network Access**
 - Click **+ Add IP Address**
 - Select **Allow access from anywhere** (for development)
 - For production, whitelist Vercel IPs: `0.0.0.0/0`
 
 ### 5. Get Connection String
+
 - Go to **Clusters** → **Connect** → **Connect your application**
 - Copy connection string, replace:
   - `<password>` with your database user password
   - `myFirstDatabase` with `consultations`
 
 Example:
+
 ```
 mongodb+srv://admin:password123@cluster0.xxxxx.mongodb.net/consultations?retryWrites=true&w=majority
 ```
@@ -183,11 +192,13 @@ mongodb+srv://admin:password123@cluster0.xxxxx.mongodb.net/consultations?retryWr
 ## Step 7️⃣: Update Environment Variables
 
 ### Update Frontend (.env in Vercel)
+
 ```
 VITE_API_URL=https://bexcode-api.vercel.app/api
 ```
 
 ### Update Backend (.env in Vercel)
+
 ```
 MONGODB_URI=mongodb+srv://admin:PASSWORD@cluster0.xxxxx.mongodb.net/consultations
 CORS_ORIGIN=https://bexcode.vercel.app
@@ -195,6 +206,7 @@ NODE_ENV=production
 ```
 
 #### How to Add in Vercel Dashboard:
+
 1. Go to Your Project → **Settings** → **Environment Variables**
 2. Add each variable
 3. Select which environments (Production/Preview/Development)
@@ -208,17 +220,19 @@ NODE_ENV=production
 Optional but recommended for automated deployments.
 
 ### Add Secrets to GitHub
+
 1. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
 2. Click **New repository secret** and add:
 
-| Secret Name | Value | Where to get it |
-|---|---|---|
-| `VERCEL_TOKEN` | [Copy from here](https://vercel.com/account/tokens) | Vercel Account Settings |
-| `VERCEL_ORG_ID` | From Vercel project settings | Vercel Project Settings |
-| `VERCEL_PROJECT_ID_FRONTEND` | From Vercel project settings | Vercel Frontend Project |
-| `VERCEL_PROJECT_ID_BACKEND` | From Vercel project settings | Vercel Backend Project |
+| Secret Name                  | Value                                               | Where to get it         |
+| ---------------------------- | --------------------------------------------------- | ----------------------- |
+| `VERCEL_TOKEN`               | [Copy from here](https://vercel.com/account/tokens) | Vercel Account Settings |
+| `VERCEL_ORG_ID`              | From Vercel project settings                        | Vercel Project Settings |
+| `VERCEL_PROJECT_ID_FRONTEND` | From Vercel project settings                        | Vercel Frontend Project |
+| `VERCEL_PROJECT_ID_BACKEND`  | From Vercel project settings                        | Vercel Backend Project  |
 
 ### Get Vercel Project IDs
+
 ```bash
 # Install Vercel CLI
 npm install -g vercel
@@ -235,18 +249,21 @@ cat .vercel/project.json
 ## Step 9️⃣: Test Deployment
 
 ### Test Frontend
+
 ```bash
 curl https://bexcode.vercel.app
 # Should return HTML
 ```
 
 ### Test Backend Health
+
 ```bash
 curl https://bexcode-api.vercel.app/api/health
 # Should return: {"success":true,"data":{"message":"API is running"},...}
 ```
 
 ### Test Full Submission
+
 ```bash
 curl -X POST https://bexcode-api.vercel.app/api/consultations \
   -H "Content-Type: application/json" \
@@ -286,6 +303,7 @@ git push origin main
 ```
 
 Vercel will automatically:
+
 1. ✅ Build your code
 2. ✅ Run tests (if configured)
 3. ✅ Deploy to production
@@ -295,23 +313,27 @@ Vercel will automatically:
 ## 🐛 Troubleshooting
 
 ### CORS Error
+
 - **Problem**: `Access to XMLHttpRequest blocked by CORS`
 - **Solution**: Update `CORS_ORIGIN` in backend to match frontend URL
 
 ### MongoDB Connection Error
+
 - **Problem**: `connection refused`
-- **Solution**: 
+- **Solution**:
   - Verify connection string in `MONGODB_URI`
   - Check IP whitelist in MongoDB Atlas
   - Ensure database user password is correct
 
 ### API Not Found
+
 - **Problem**: `404 on API endpoints`
 - **Solution**:
   - Verify `VITE_API_URL` in frontend matches backend URL
   - Check both projects are deployed in Vercel
 
 ### Build Fails
+
 - **Problem**: Vercel build fails
 - **Solution**:
   - Check build logs in Vercel dashboard
@@ -323,11 +345,13 @@ Vercel will automatically:
 ## 📊 Monitoring Deployments
 
 ### Vercel Dashboard
+
 - https://vercel.com/dashboard
 - View logs, analytics, and deployment history
 - Rollback to previous versions if needed
 
 ### GitHub Insights
+
 - https://github.com/YOUR_USERNAME/bexcode-health-consultation
 - View commits, branches, and pull requests
 
@@ -356,6 +380,7 @@ Vercel will automatically:
 ---
 
 **Project URLs** (after deployment):
+
 - Frontend: https://bexcode.vercel.app
 - Backend API: https://bexcode-api.vercel.app
 - GitHub: https://github.com/YOUR_USERNAME/bexcode-health-consultation

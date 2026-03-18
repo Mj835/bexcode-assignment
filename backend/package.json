@@ -1,5 +1,5 @@
 {
-{"name": "bexcode-backend",
+  "name": "bexcode-backend",
   "version": "1.0.0",
   "description": "BexCode - Backend API for health consultation questionnaire",
   "main": "dist/index.js",
