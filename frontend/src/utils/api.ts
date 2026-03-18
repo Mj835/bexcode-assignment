@@ -54,30 +54,6 @@ export class ApiError extends Error {
 }
 
 /**
- * Check if API service is healthy
- */
-export async function checkHealth(): Promise<boolean> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/health`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      return false;
-    }
-
-    const data: ApiResponse<HealthCheckResponse> = await response.json();
-    return data.success === true;
-  } catch (error) {
-    console.error("Health check failed:", error);
-    return false;
-  }
-}
-
-/**
  * Submit consultation form data to backend
  */
 export async function submitConsultation(
@@ -137,81 +113,6 @@ export async function submitConsultation(
       500,
       error instanceof Error ? error.message : "Unknown error occurred",
       undefined,
-    );
-  }
-}
-
-/**
- * Get all consultations (admin/demo endpoint)
- */
-export async function getAllConsultations(): Promise<ConsultationData[]> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/consultations`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new ApiError(response.status, "Failed to fetch consultations");
-    }
-
-    const result: ApiResponse<ConsultationData[]> = await response.json();
-
-    if (!result.success || !result.data) {
-      throw new ApiError(500, "Invalid response format");
-    }
-
-    return result.data;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(
-      500,
-      error instanceof Error ? error.message : "Failed to fetch consultations",
-    );
-  }
-}
-
-/**
- * Get specific consultation by ID
- */
-export async function getConsultationById(
-  id: string,
-): Promise<ConsultationData> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/consultations/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new ApiError(404, "Consultation not found");
-      }
-      throw new ApiError(response.status, "Failed to fetch consultation");
-    }
-
-    const result: ApiResponse<ConsultationData> = await response.json();
-
-    if (!result.success || !result.data) {
-      throw new ApiError(500, "Invalid response format");
-    }
-
-    return result.data;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    }
-
-    throw new ApiError(
-      500,
-      error instanceof Error ? error.message : "Failed to fetch consultation",
     );
   }
 }

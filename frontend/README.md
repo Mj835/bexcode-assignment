@@ -1,73 +1,125 @@
-# React + TypeScript + Vite
+# BexCode Frontend - Health Consultation Intake System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React + TypeScript web application for collecting health consultation intake data through dynamic questionnaires.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dynamic Questionnaire System**: Flexible question rendering with conditional logic
+- **Form Validation**: Real-time validation with error messages
+- **Responsive Design**: Mobile-friendly UI with Tailwind CSS
+- **Type-Safe**: Full TypeScript implementation
+- **API Integration**: Seamless backend communication
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **ESLint** - Code quality
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+frontend/
+├── src/
+│   ├── components/       # React components
+│   │   ├── DynamicQuestionnaire.tsx
+│   │   └── IntakeConsultForm.tsx
+│   ├── utils/           # Utility functions
+│   │   ├── api.ts       # API client
+│   │   ├── conditionalLogic.ts
+│   │   ├── responseParser.ts
+│   │   └── timezone.ts
+│   ├── types/           # TypeScript types
+│   ├── data/            # Static data (questionnaire.json)
+│   ├── styles/          # CSS files
+│   ├── App.tsx          # Root component
+│   └── main.tsx         # Entry point
+├── public/              # Static assets
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Install Dependencies
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+```
+
+### Development Server
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:5173` in your browser.
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+## Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```
+VITE_API_URL=http://localhost:5000/api
+```
+
+For production (Vercel), set environment variable:
+
+```
+VITE_API_URL=https://bexcode-assignment-backend.vercel.app/api
+```
+
+## Components
+
+### DynamicQuestionnaire
+Renders questions based on type (radio, select, checkbox, compound) with conditional logic support.
+
+### IntakeConsultForm
+Main form component that manages form state, validation, and API submission.
+
+## API Communication
+
+The frontend communicates with the backend API at `/api/consultations` endpoint.
+
+**Submit Consultation:**
+```
+POST /api/consultations
+Content-Type: application/json
+
+{
+  "userDetails": { ... },
+  "responses": [ ... ],
+  "metadata": { ... }
+}
+```
+
+## Build & Deployment
+
+The project is configured for deployment on **Vercel**:
+
+1. Push code to GitHub
+2. Vercel auto-deploys on push to main
+3. Set environment variables in Vercel dashboard
+4. Production URL: https://bexcode.vercel.app
 ```

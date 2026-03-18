@@ -5,7 +5,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectToDatabase } from "./config/database";
+import { connectToDatabase, disconnectFromDatabase } from "./config/database";
 import routes from "./routes";
 import { errorHandler, notFoundHandler, requestLogger } from "./middleware";
 import { ApiResponse } from "./types";
@@ -83,12 +83,6 @@ process.on("SIGINT", async () => {
   await disconnectFromDatabase();
   process.exit(0);
 });
-
-// Async disconnect function
-async function disconnectFromDatabase(): Promise<void> {
-  const mongoose = require("mongoose");
-  await mongoose.disconnect();
-}
 
 startServer();
 
