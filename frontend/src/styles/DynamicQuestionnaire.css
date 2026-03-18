@@ -29,11 +29,17 @@
   background: #f8f9fa;
   border-radius: 6px;
   border-left: 4px solid #4a90e2;
+  transition: all 0.3s ease;
+}
+
+.question-container__has-error {
+  border-left-color: #dc3545;
+  background: rgba(220, 53, 69, 0.03);
 }
 
 .question-label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
   color: #333;
   font-size: 1rem;
@@ -43,6 +49,14 @@
   margin: 0 0 1rem 0;
   color: #666;
   font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.helper-text {
+  color: #999;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: italic;
 }
 
 /* Radio Group Styles */
@@ -50,6 +64,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .radio-option {
@@ -62,6 +79,7 @@
   cursor: pointer;
   width: 18px;
   height: 18px;
+  accent-color: #4a90e2;
 }
 
 .radio-option label {
@@ -75,6 +93,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .checkbox-option {
@@ -87,6 +108,7 @@
   cursor: pointer;
   width: 18px;
   height: 18px;
+  accent-color: #4a90e2;
 }
 
 .checkbox-option label {
@@ -183,22 +205,20 @@
 /* Error States */
 .radio-group.error,
 .checkbox-group.error {
-  border: 2px solid #dc3545;
-  border-radius: 4px;
-  padding: 0.75rem;
-  background-color: #fff5f5;
+  border-left: 3px solid #dc3545;
+  background-color: rgba(220, 53, 69, 0.05);
+  padding-left: 0.75rem;
 }
 
 .compound-fields.error {
-  border: 2px solid #dc3545;
-  border-radius: 4px;
-  padding: 1rem;
-  background-color: #fff5f5;
+  border-left: 3px solid #dc3545;
+  background-color: rgba(220, 53, 69, 0.05);
+  padding-left: 1rem;
 }
 
 .compound-field .form-input.error {
   border-color: #dc3545;
-  background-color: #fff8f8;
+  background-color: rgba(220, 53, 69, 0.02);
 }
 
 .compound-field .form-input.error:focus {
@@ -208,16 +228,18 @@
 .error-message {
   color: #dc3545;
   font-size: 0.85rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0;
   font-weight: 500;
-  animation: shake 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
+.error-message::before {
+  content: "⚠";
+  font-size: 0.9rem;
+}
   25% {
     transform: translateX(-5px);
   }

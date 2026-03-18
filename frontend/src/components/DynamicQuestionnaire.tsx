@@ -70,7 +70,10 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     ) as string;
 
     return (
-      <div key={question.questionId} className="question-container">
+      <div 
+        key={question.questionId} 
+        className={`question-container ${hasError ? "question-container__has-error" : ""}`}
+      >
         <label className="question-label">
           {question.question}
           {question.required && <span className="required">*</span>}
@@ -119,7 +122,10 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     ) as string;
 
     return (
-      <div key={question.questionId} className="question-container">
+      <div 
+        key={question.questionId} 
+        className={`question-container ${hasError ? "question-container__has-error" : ""}`}
+      >
         <label htmlFor={question.questionId} className="question-label">
           {question.question}
           {question.required && <span className="required">*</span>}
@@ -171,7 +177,10 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     };
 
     return (
-      <div key={question.questionId} className="question-container">
+      <div 
+        key={question.questionId} 
+        className={`question-container ${hasError ? "question-container__has-error" : ""}`}
+      >
         <label className="question-label">
           {question.question}
           {question.required && <span className="required">*</span>}
@@ -224,7 +233,10 @@ export const DynamicQuestionnaire: React.FC<DynamicQuestionnaireProps> = ({
     };
 
     return (
-      <div key={question.questionId} className="question-container">
+      <div 
+        key={question.questionId} 
+        className={`question-container ${hasError ? "question-container__has-error" : ""}`}
+      >
         <label className="question-label">
           {question.question}
           {question.required && <span className="required">*</span>}
