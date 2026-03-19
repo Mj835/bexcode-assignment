@@ -20,17 +20,26 @@ const MONGODB_URI =
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
 // Middleware
+const corsOrigins = [
+  CORS_ORIGIN.replace(/\/$/, ""), // Remove trailing slash from env var
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://bexcode-assignment.vercel.app",
+];
+
+// Add wildcard for production if CORS_ORIGIN is not properly set
+if (process.env.NODE_ENV === "production" && !CORS_ORIGIN) {
+  corsOrigins.push("*");
+}
+
 app.use(
   cors({
-    origin: [
-      CORS_ORIGIN.replace(/\/$/, ""), // Remove trailing slash from env var
-      "http://localhost:5173",
-      "http://localhost:3000",
-    ],
+    origin: corsOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     optionsSuccessStatus: 200,
+    maxAge: 86400, // 24 hours
   }),
 );
 app.use(express.json());
