@@ -93,9 +93,11 @@ VITE_API_URL=https://bexcode-assignment-backend.vercel.app/api
 ## Components
 
 ### DynamicQuestionnaire
+
 Renders questions based on type (radio, select, checkbox, compound) with conditional logic support.
 
 ### IntakeConsultForm
+
 Main form component that manages form state, validation, and API submission.
 
 ## API Communication
@@ -103,6 +105,7 @@ Main form component that manages form state, validation, and API submission.
 The frontend communicates with the backend API at `/api/consultations` endpoint.
 
 **Submit Consultation:**
+
 ```
 POST /api/consultations
 Content-Type: application/json
@@ -122,4 +125,7 @@ The project is configured for deployment on **Vercel**:
 2. Vercel auto-deploys on push to main
 3. Set environment variables in Vercel dashboard
 4. Production URL: https://bexcode.vercel.app
+
+```
+
 ```

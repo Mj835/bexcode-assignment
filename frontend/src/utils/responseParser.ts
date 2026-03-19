@@ -197,7 +197,8 @@ function validateName(name: string): string | null {
   }
 
   // Allow letters (including accented), spaces, hyphens, apostrophes
-  const nameRegex = /^[a-zA-ZàáäâèéëêìíïîòóöôùúüûñçÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛÑÇ\s\-']+$/;
+  const nameRegex =
+    /^[a-zA-ZàáäâèéëêìíïîòóöôùúüûñçÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛÑÇ\s\-']+$/;
   if (!nameRegex.test(trimmedName)) {
     return "Full name can only contain letters, spaces, hyphens, and apostrophes";
   }
@@ -219,8 +220,7 @@ function validateEmail(email: string): string | null {
   const trimmedEmail = email.trim().toLowerCase();
 
   // RFC 5322 simplified email validation
-  const emailRegex =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(trimmedEmail)) {
     return "Please enter a valid email format";
   }
@@ -310,10 +310,7 @@ function validateDateOfBirth(dob: string): string | null {
   let age = today.getFullYear() - date.getFullYear();
   const monthDiff = today.getMonth() - date.getMonth();
 
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < date.getDate())
-  ) {
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < date.getDate())) {
     age--;
   }
 

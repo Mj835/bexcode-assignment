@@ -27,7 +27,11 @@ app.use(
       const allowedOrigin = CORS_ORIGIN.replace(/\/$/, ""); // Remove trailing slash
       const cleanOrigin = origin?.replace(/\/$/, "") || "";
 
-      if (!origin || cleanOrigin === allowedOrigin || cleanOrigin === "http://localhost:5173") {
+      if (
+        !origin ||
+        cleanOrigin === allowedOrigin ||
+        cleanOrigin === "http://localhost:5173"
+      ) {
         callback(null, true);
       } else {
         callback(new Error(`CORS not allowed from ${origin}`));

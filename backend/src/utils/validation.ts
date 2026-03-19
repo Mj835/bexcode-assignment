@@ -47,10 +47,15 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
         field: "fullName",
         message: "Full name must not exceed 100 characters",
       });
-    } else if (!/^[a-zA-ZàáäâèéëêìíïîòóöôùúüûñçÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛÑÇ\s\-']+$/.test(trimmed)) {
+    } else if (
+      !/^[a-zA-ZàáäâèéëêìíïîòóöôùúüûñçÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛÑÇ\s\-']+$/.test(
+        trimmed,
+      )
+    ) {
       errors.push({
         field: "fullName",
-        message: "Full name can only contain letters, spaces, hyphens, and apostrophes",
+        message:
+          "Full name can only contain letters, spaces, hyphens, and apostrophes",
       });
     }
   }
@@ -62,7 +67,7 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
   } else {
     const trimmedEmail = email.trim().toLowerCase();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     if (!emailRegex.test(trimmedEmail)) {
       errors.push({ field: "email", message: "Invalid email format" });
     } else if (trimmedEmail.length > 254) {
@@ -77,7 +82,7 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
   } else {
     const trimmedPhone = phone.trim();
     const digitsOnly = trimmedPhone.replace(/\D/g, "");
-    
+
     if (digitsOnly.length < 10) {
       errors.push({
         field: "phone",
@@ -91,7 +96,8 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
     } else if (!/^[\d\s\-\(\)\+]+$/.test(trimmedPhone)) {
       errors.push({
         field: "phone",
-        message: "Phone number can only contain digits and formatting characters",
+        message:
+          "Phone number can only contain digits and formatting characters",
       });
     }
   }
@@ -119,7 +125,10 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
       // Calculate age
       let age = today.getFullYear() - date.getFullYear();
       const monthDiff = today.getMonth() - date.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < date.getDate())) {
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < date.getDate())
+      ) {
         age--;
       }
 
