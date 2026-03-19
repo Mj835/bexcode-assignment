@@ -58,6 +58,7 @@ export async function submitConsultation(
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(data),
     });
 
@@ -120,6 +121,7 @@ export async function getConsultationStats(): Promise<ConsultationData> {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (!response.ok) {
