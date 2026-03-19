@@ -32,13 +32,6 @@ interface ConsultationData extends Record<string, unknown> {
 }
 
 /**
- * Health check response
- */
-interface HealthCheckResponse {
-  message: string;
-}
-
-/**
  * All possible API errors that can occur
  */
 export class ApiError extends Error {
