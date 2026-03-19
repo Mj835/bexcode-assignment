@@ -19,7 +19,23 @@ async function ensureDbConnected(): Promise<void> {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  await ensureDbConnected();
-  return app(req as any, res as any);
+  try {
+    await ensureDbConnected();
+    return (app as any)(req, res);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown server error";
+    const stack = error instanceof Error ? error.stack : undefined;
+
+    // Vercel logs will show this, and we also return a minimal JSON payload
+    console.error("Serverless handler crashed:", message, stack);
+
+    if (!res.headersSent) {
+      res
+        .status(500)
+        .json({ success: false, error: message, timestamp: new Date().toISOString() });
+    }
+    return;
+  }
 }
 
