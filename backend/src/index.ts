@@ -20,28 +20,47 @@ const MONGODB_URI =
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
 // Middleware
-const corsOrigins = [
-  CORS_ORIGIN.replace(/\/$/, ""), // Remove trailing slash from env var
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://bexcode-assignment.vercel.app",
-];
+const corsOptions = {
+  // Accept requests from frontend (with or without trailing slash)
+  origin: function (origin: string | undefined, callback: Function) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) {
+      return callback(null, true);
+    }
 
-// Add wildcard for production if CORS_ORIGIN is not properly set
-if (process.env.NODE_ENV === "production" && !CORS_ORIGIN) {
-  corsOrigins.push("*");
-}
+    // Remove trailing slash for comparison
+    const cleanOrigin = origin.replace(/\/$/, "");
 
-app.use(
-  cors({
-    origin: corsOrigins,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    optionsSuccessStatus: 200,
-    maxAge: 86400, // 24 hours
-  }),
-);
+    // List of allowed origins
+    const allowedOrigins = [
+      "https://bexcode-assignment.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://127.0.0.1:5173",
+      "http://127.0.0.1:3000",
+    ];
+
+    // Also check the env var
+    if (process.env.CORS_ORIGIN) {
+      allowedOrigins.push(process.env.CORS_ORIGIN.replace(/\/$/, ""));
+    }
+
+    if (allowedOrigins.includes(cleanOrigin)) {
+      callback(null, true);
+    } else {
+      console.log(`CORS request rejected from origin: ${origin}`);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Content-Type"],
+  optionsSuccessStatus: 200,
+  maxAge: 86400,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
