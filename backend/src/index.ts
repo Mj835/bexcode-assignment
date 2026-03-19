@@ -22,22 +22,15 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 // Middleware
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests from the configured origin (with or without trailing slash)
-      const allowedOrigin = CORS_ORIGIN.replace(/\/$/, ""); // Remove trailing slash
-      const cleanOrigin = origin?.replace(/\/$/, "") || "";
-
-      if (
-        !origin ||
-        cleanOrigin === allowedOrigin ||
-        cleanOrigin === "http://localhost:5173"
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error(`CORS not allowed from ${origin}`));
-      }
-    },
+    origin: [
+      CORS_ORIGIN.replace(/\/$/, ""), // Remove trailing slash from env var
+      "http://localhost:5173",
+      "http://localhost:3000",
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200,
   }),
 );
 app.use(express.json());
