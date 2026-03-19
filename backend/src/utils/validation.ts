@@ -19,7 +19,7 @@ function isString(value: unknown): value is string {
 }
 
 /**
- * Validate user details
+ * Validate user details with comprehensive checks
  */
 export function validateUserDetails(userDetails: unknown): ValidationError[] {
   const errors: ValidationError[] = [];
@@ -35,30 +35,65 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
   const fullName = details.fullName;
   if (!isString(fullName) || !fullName.trim()) {
     errors.push({ field: "fullName", message: "Full name is required" });
-  } else if (fullName.trim().length < 2) {
-    errors.push({
-      field: "fullName",
-      message: "Full name must be at least 2 characters",
-    });
+  } else {
+    const trimmed = fullName.trim();
+    if (trimmed.length < 2) {
+      errors.push({
+        field: "fullName",
+        message: "Full name must be at least 2 characters",
+      });
+    } else if (trimmed.length > 100) {
+      errors.push({
+        field: "fullName",
+        message: "Full name must not exceed 100 characters",
+      });
+    } else if (!/^[a-zA-ZàáäâèéëêìíïîòóöôùúüûñçÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛÑÇ\s\-']+$/.test(trimmed)) {
+      errors.push({
+        field: "fullName",
+        message: "Full name can only contain letters, spaces, hyphens, and apostrophes",
+      });
+    }
   }
 
   // Email validation
   const email = details.email;
   if (!isString(email)) {
     errors.push({ field: "email", message: "Email is required" });
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.push({ field: "email", message: "Invalid email format" });
+  } else {
+    const trimmedEmail = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!emailRegex.test(trimmedEmail)) {
+      errors.push({ field: "email", message: "Invalid email format" });
+    } else if (trimmedEmail.length > 254) {
+      errors.push({ field: "email", message: "Email address is too long" });
+    }
   }
 
   // Phone validation
   const phone = details.phone;
   if (!isString(phone) || !phone.trim()) {
     errors.push({ field: "phone", message: "Phone number is required" });
-  } else if (!/^\d{10,}/.test(phone.replace(/\D/g, ""))) {
-    errors.push({
-      field: "phone",
-      message: "Phone number must have at least 10 digits",
-    });
+  } else {
+    const trimmedPhone = phone.trim();
+    const digitsOnly = trimmedPhone.replace(/\D/g, "");
+    
+    if (digitsOnly.length < 10) {
+      errors.push({
+        field: "phone",
+        message: "Phone number must have at least 10 digits",
+      });
+    } else if (digitsOnly.length > 15) {
+      errors.push({
+        field: "phone",
+        message: "Phone number must not exceed 15 digits",
+      });
+    } else if (!/^[\d\s\-\(\)\+]+$/.test(trimmedPhone)) {
+      errors.push({
+        field: "phone",
+        message: "Phone number can only contain digits and formatting characters",
+      });
+    }
   }
 
   // Date of birth validation
@@ -72,11 +107,35 @@ export function validateUserDetails(userDetails: unknown): ValidationError[] {
         field: "dateOfBirth",
         message: "Invalid date format for date of birth",
       });
-    } else if (date > new Date()) {
-      errors.push({
-        field: "dateOfBirth",
-        message: "Date of birth cannot be in the future",
-      });
+    } else {
+      const today = new Date();
+      if (date > today) {
+        errors.push({
+          field: "dateOfBirth",
+          message: "Date of birth cannot be in the future",
+        });
+      }
+
+      // Calculate age
+      let age = today.getFullYear() - date.getFullYear();
+      const monthDiff = today.getMonth() - date.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < date.getDate())) {
+        age--;
+      }
+
+      if (age < 13) {
+        errors.push({
+          field: "dateOfBirth",
+          message: "You must be at least 13 years old",
+        });
+      }
+
+      if (age > 150) {
+        errors.push({
+          field: "dateOfBirth",
+          message: "Please enter a valid date of birth",
+        });
+      }
     }
   }
 

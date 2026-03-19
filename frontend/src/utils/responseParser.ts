@@ -105,7 +105,7 @@ function formatCompoundAnswer(
 }
 
 /**
- * Validates that all required fields are filled
+ * Validates that all required fields are filled with proper format
  */
 export function validateFormData(
   formValues: FormValues,
@@ -114,19 +114,24 @@ export function validateFormData(
   const errors: Record<string, string> = {};
 
   // Validate user details
-  if (!formValues.userDetails.fullName.trim()) {
-    errors["fullName"] = "Full name is required";
+  const nameError = validateName(formValues.userDetails.fullName);
+  if (nameError) {
+    errors["fullName"] = nameError;
   }
-  if (!formValues.userDetails.email.trim()) {
-    errors["email"] = "Email is required";
-  } else if (!isValidEmail(formValues.userDetails.email)) {
-    errors["email"] = "Please enter a valid email";
+
+  const emailError = validateEmail(formValues.userDetails.email);
+  if (emailError) {
+    errors["email"] = emailError;
   }
-  if (!formValues.userDetails.phone.trim()) {
-    errors["phone"] = "Phone number is required";
+
+  const phoneError = validatePhone(formValues.userDetails.phone);
+  if (phoneError) {
+    errors["phone"] = phoneError;
   }
-  if (!formValues.userDetails.dateOfBirth.trim()) {
-    errors["dateOfBirth"] = "Date of birth is required";
+
+  const dobError = validateDateOfBirth(formValues.userDetails.dateOfBirth);
+  if (dobError) {
+    errors["dateOfBirth"] = dobError;
   }
 
   // Validate questionnaire responses
@@ -170,9 +175,159 @@ export function validateFormData(
 }
 
 /**
- * Simple email validation
+ * Validates full name
+ * - Required
+ * - Minimum 2 characters
+ * - Maximum 100 characters
+ * - Only letters, spaces, hyphens, and apostrophes allowed
  */
-function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+function validateName(name: string): string | null {
+  if (!name || !name.trim()) {
+    return "Full name is required";
+  }
+
+  const trimmedName = name.trim();
+
+  if (trimmedName.length < 2) {
+    return "Full name must be at least 2 characters";
+  }
+
+  if (trimmedName.length > 100) {
+    return "Full name must not exceed 100 characters";
+  }
+
+  // Allow letters (including accented), spaces, hyphens, apostrophes
+  const nameRegex = /^[a-zA-ZàáäâèéëêìíïîòóöôùúüûñçÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛÑÇ\s\-']+$/;
+  if (!nameRegex.test(trimmedName)) {
+    return "Full name can only contain letters, spaces, hyphens, and apostrophes";
+  }
+
+  return null;
 }
+
+/**
+ * Validates email address
+ * - Required
+ * - Valid email format
+ * - Check for common typos
+ */
+function validateEmail(email: string): string | null {
+  if (!email || !email.trim()) {
+    return "Email is required";
+  }
+
+  const trimmedEmail = email.trim().toLowerCase();
+
+  // RFC 5322 simplified email validation
+  const emailRegex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(trimmedEmail)) {
+    return "Please enter a valid email format";
+  }
+
+  // Additional validation
+  if (trimmedEmail.length > 254) {
+    return "Email address is too long";
+  }
+
+  // Check for common typos
+  const commonTypos = [
+    "gmial.com",
+    "gmai.com",
+    "yahooo.com",
+    "hotnail.com",
+    "hotmial.com",
+  ];
+  const domain = trimmedEmail.split("@")[1];
+  if (commonTypos.includes(domain)) {
+    return `Did you mean ${domain.replace("gmial", "gmail").replace("gmai", "gmail").replace("yahooo", "yahoo").replace("hotnail", "hotmail").replace("hotmial", "hotmail")}?`;
+  }
+
+  return null;
+}
+
+/**
+ * Validates phone number
+ * - Required
+ * - Minimum 10 digits
+ * - Maximum 15 digits (international standard)
+ * - Only digits and optional formatting characters allowed
+ */
+function validatePhone(phone: string): string | null {
+  if (!phone || !phone.trim()) {
+    return "Phone number is required";
+  }
+
+  const trimmedPhone = phone.trim();
+
+  // Extract only digits
+  const digitsOnly = trimmedPhone.replace(/\D/g, "");
+
+  if (digitsOnly.length < 10) {
+    return "Phone number must have at least 10 digits";
+  }
+
+  if (digitsOnly.length > 15) {
+    return "Phone number must not exceed 15 digits";
+  }
+
+  // Allow only digits, spaces, hyphens, parentheses, and plus sign
+  const phoneRegex = /^[\d\s\-\(\)\+]+$/;
+  if (!phoneRegex.test(trimmedPhone)) {
+    return "Phone number can only contain digits and formatting characters";
+  }
+
+  return null;
+}
+
+/**
+ * Validates date of birth
+ * - Required
+ * - Valid date format
+ * - Not in the future
+ * - Minimum age of 13 years
+ * - Maximum age of 150 years
+ */
+function validateDateOfBirth(dob: string): string | null {
+  if (!dob || !dob.trim()) {
+    return "Date of birth is required";
+  }
+
+  const date = new Date(dob);
+
+  if (isNaN(date.getTime())) {
+    return "Please enter a valid date";
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (date > today) {
+    return "Date of birth cannot be in the future";
+  }
+
+  // Calculate age
+  let age = today.getFullYear() - date.getFullYear();
+  const monthDiff = today.getMonth() - date.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < date.getDate())
+  ) {
+    age--;
+  }
+
+  if (age < 13) {
+    return "You must be at least 13 years old";
+  }
+
+  if (age > 150) {
+    return "Please enter a valid date of birth";
+  }
+
+  return null;
+}
+
+/**
+ * Simple email validation (used elsewhere if needed)
+ */
